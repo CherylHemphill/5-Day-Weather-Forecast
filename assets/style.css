@@ -1,4 +1,4 @@
-/* @import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap'); */
+
 @import url('https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap');
 * {
     margin: 0;
@@ -25,7 +25,7 @@ body{
     color: whitesmoke;
 }
 
-.search-field {
+.search-field {  /* City Location Search */
     position: relative;
     box-sizing: border-box;
     padding: 2px;
@@ -62,6 +62,7 @@ body{
 
 }
 
+    /* Forecasted Weather */
 .current-weather {
     font-size: 2rem;
     margin: 8px;
