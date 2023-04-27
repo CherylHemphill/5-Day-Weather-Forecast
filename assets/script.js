@@ -6,15 +6,15 @@
 let URLsearch = 'https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={API key}'
 
 
-$(document).ready(function(){ //defer JQuery until page loads
+// $(document).ready(function(){ //defer JQuery until page loads
 
-    $("submit-search").click(function() 
-    {
-        fetch('URLseach')
-        .then(return => {
-            return Response.JSON();
-        });
-        })
+//     $("submit-search").click(function() 
+//     {
+//         fetch('URLseach')
+//         .then(return => {
+//             return Response.JSON();
+//         });
+//         })
     
 
 
@@ -24,4 +24,19 @@ $(document).ready(function(){ //defer JQuery until page loads
 
 
 
-});     //End JQuery Deferral
+// });     //End JQuery Deferral
+
+$(document).ready(function() {
+    $("#submit-search").click(function() {
+        fetch('URLsearch')
+        .then(response => {
+            return response.json();
+        })
+        .then(data => {
+            // Use the search results data here
+        })
+        .catch(error => {
+            // Handle any errors that occur during the search
+        });
+    });
+});
