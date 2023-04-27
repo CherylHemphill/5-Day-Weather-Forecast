@@ -8,7 +8,14 @@ let URLsearch = 'https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon=
 
 $(document).ready(function(){ //defer JQuery until page loads
 
-    $("submit-search").click(function())
+    $("submit-search").click(function() 
+    {
+        fetch('URLseach')
+        .then(return => {
+            return Response.JSON();
+        });
+        })
+    
 
 
 
