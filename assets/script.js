@@ -22,7 +22,7 @@ function citySearch(e){
 
 function fetchCityData(cityName){
   let apiKey = '51e134b64a886c4af2649caf80c493b5'
-  let requestUrl = 'https://api.openweathermap.org/data/2.5/weather?q=' + cityName + '&appid=' + apiKey
+  let requestUrl = 'https://api.openweathermap.org/data/2.5/weather?q=' + cityName + '&units=imperial&appid=' + apiKey
 
   //start fetch request
   fetch(requestUrl) 
@@ -38,17 +38,17 @@ function fetchCityData(cityName){
   let tempOfCity = document.createElement('h3')
   tempOfCity.textContent = Math.round((cityData.main.temp - 273.15) * 9 / 5 + 32) + "\xB0" + "F";
  currentContainer.append(tempOfCity)
-  })
 
-  .then(cityData =>{
-    for(i=0; i<5; i++){ //Min Temperature
-    document.getElementById('day' +(i+1) +'Min').innerHTML = 'Min:' +Number(cityData.list[i].main.temp_min);
-    let minTemp = Math.round((cityData.main.temp_min - 273.15) * 9 / 5 + 32) + "\xB0" + "F";
+ for(i=0; i<40; i+=8){ //Min Temperature
+    document.getElementById('day' +(i) +'Min').innerHTML = 'Min:' +Number(cityData.list[i].main.temp_min);
+    document.getElementById('day' +(i) +'Max').innerHTML = 'Max:' +Number(cityData.list[i].main.temp_max);
+   
+    // let minTemp = Math.round((cityData.main.temp_min - 273.15) * 9 / 5 + 32) + "\xB0" + "F";
     // day[i]Min.append(minTemp)
     }
     for(i=0; i<5; i++){  //Max Temperature
-    document.getElementById('day' +(i+1) +'Max').innerHTML = 'Max:' +Number(cityData.list[i].main.temp_max);
-    let maxTemp = Math.round((cityData.list[i].main.temp_max - 273.15) * 9 / 5 + 32) + "\xB0" + "F";
+   
+    // let maxTemp = Math.round((cityData.list[i].main.temp_max - 273.15) * 9 / 5 + 32) + "\xB0" + "F";
     // day[i]Max.append(MaxTemp)
     }
     for(i=0; i<5; i++){    //Icon for Condition
@@ -61,6 +61,8 @@ function fetchCityData(cityName){
     for (i=0; i<5; i++){  //Wind speed
       document.getElementById('wind-speed').innerHTML = 'Wind Speed' +Number(data.list[i].wind.speed);
     }
-})
+  })
 
-btn.addEventListener('click', citySearch)}
+
+}
+btn.addEventListener('click', citySearch)
