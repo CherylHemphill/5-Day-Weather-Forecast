@@ -22,7 +22,7 @@ function citySearch(e){
 
 function fetchCityData(cityName){
   let apiKey = '51e134b64a886c4af2649caf80c493b5'
-  let requestUrl = 'https://api.openweathermap.org/data/2.5/weather?q=' + cityName + '&appid=' + apiKey
+  let requestUrl = 'https://api.openweathermap.org/data/2.5/weather?q=' + cityName + '&units=imperial&appid=' + apiKey
 
   //start fetch request
   fetch(requestUrl) 
@@ -36,31 +36,46 @@ function fetchCityData(cityName){
     currentContainer.append(nameOfCity)
      
   let tempOfCity = document.createElement('h3')
-  tempOfCity.textContent = Math.round((cityData.main.temp - 273.15) * 9 / 5 + 32) + "\xB0" + "F";
- currentContainer.append(tempOfCity)
+   tempOfCity.textContent = currentContainer.append(cityData.main.temp)
+   
+ for(i=0; i<40; i+=8){ 
+          //Min Temperature
+    document.getElementById('day' +(i) +'Min').textContent = 'Min:' +Number(cityData.list[i].main.temp_min);
+          day0Min.append(temp_min)
+          
+          day8Min.append(temp_min)
+          day16Min.append(temp_min)
+          day24Min.append(temp_min)
+          day32Min.append(temp_min)
+          //Max Temp
+    document.getElementById('day' +(i) +'Max').innerHTML = 'Max:' +Number(cityData.list[i].main.temp_max);
+          day0Max.append(temp_max)
+          day8Max.append(temp_max)
+          day16Max.append(temp_max)
+          day24Max.append(temp_max)
+          day32Max.append(temp_max)
+          //Daily Icon
+    document.getElementById('iconContainer').src='https://openweathermap.org/img/wn/'+ data.list[i].weather[0].icon+'.png';
+        iconContainer[i].append(icon.png)
+          
+          // Humidity
+    document.getElementById('humidity + (i)').innerHTML = 'Humidity:' + Number(data.list[i].main.humidity);
+         humidity0.append(humidity)
+         humidity8.append(humidity)
+         humidity16.append(humidity)
+         humidity24.append(humidity)
+         humidity32.append(humidity)
+          //Wind speed
+    document.getElementById('wind-speed + (i)').innerHTML = 'Wind Speed' +Number(data.list[i].wind.speed);
+        wind-speed0.append(wind.speed)
+        wind-speed8.append(wind.speed)
+        wind-speed16.append(wind.speed)
+        wind-speed24.append(wind.speed)
+        wind-speed32.append(wind.speed)
+  }
+  
   })
 
-  .then(cityData =>{
-    for(i=0; i<5; i++){ //Min Temperature
-    document.getElementById('day' +(i+1) +'Min').innerHTML = 'Min:' +Number(cityData.list[i].main.temp_min);
-    let minTemp = Math.round((cityData.main.temp_min - 273.15) * 9 / 5 + 32) + "\xB0" + "F";
-    // day[i]Min.append(minTemp)
-    }
-    for(i=0; i<5; i++){  //Max Temperature
-    document.getElementById('day' +(i+1) +'Max').innerHTML = 'Max:' +Number(cityData.list[i].main.temp_max);
-    let maxTemp = Math.round((cityData.list[i].main.temp_max - 273.15) * 9 / 5 + 32) + "\xB0" + "F";
-    // day[i]Max.append(MaxTemp)
-    }
-    for(i=0; i<5; i++){    //Icon for Condition
-        document.getElementById('iconContainer').src='https://openweathermap.org/img/wn/'+ data.list[i].weather[0].icon+'.png';
-        iconContainer[i].append(icon)
-    }
-    for (i=0; i<5; i++){   //Humidity
-      document.getElementById('humidity').innerHTML = 'Humidity:' + Number(data.list[i].main.humidity);
-    }
-    for (i=0; i<5; i++){  //Wind speed
-      document.getElementById('wind-speed').innerHTML = 'Wind Speed' +Number(data.list[i].wind.speed);
-    }
-})
 
-btn.addEventListener('click', citySearch)}
+}
+btn.addEventListener('click', citySearch)
