@@ -20,6 +20,9 @@
   <section id="location-search" class="search-field">
     <input type="text" placeholder=" City Location Search" id="search" class="search-area" aria-label="loction search field"> 
     <button type="submit" id="submit-search" class="city-search-btn" aria-placeholder="search"><i class="fa fa-search"></i>Search</button>
+  <ul>
+    <li id="cityList" class="history-search"></li>
+  </ul>
   </section>
   <div id="history"></div>
         <!--Current Location Display-->
@@ -33,10 +36,11 @@
   <section id="five-day-container " class="forecast1">
     <div id="iconContainer"> 
       <div class="icons">
+          <div id="day0Icon"></div>
           <div id="day0Min" class="MinTemp"></div>
           <div id="day0Max" class="MaxTemp"></div>
-          <div id="humidity0" class="humdity-level"></div>
-          <div id="wind-speed0" class="wind"></div>
+          <div id="day0Humidity" class="humdity-level"></div>
+          <div id="day0Wind" class="wind"></div>
       </div>
   </div>
   </section>
@@ -44,10 +48,11 @@
   <section id="five-day-container " class="forecast2">
     <div id="iconContainer"> 
       <div class="icons">
+          <div id="day1Icon"></div>
           <div id="day1Min" class="MinTemp"></div>
           <div id="day1Max" class="MaxTemp"></div>
-          <div id="humidity1" class="humdity-level"></div>
-          <div id="wind-speed1" class="wind"></div>
+          <div id="day1Humidity" class="humdity-level"></div>
+          <div id="day1Wind" class="wind"></div>
       </div>
   </div>
   </section>
@@ -55,10 +60,11 @@
   <section id="five-day-container " class="forecast3">
     <div id="iconContainer">
       <div class="icons">
+          <div id="day2Icon"></div>
           <div id="day2Min" class="MinTemp"></div>
           <div id="day2Max" class="MaxTemp"></div>
-          <div id="humidity2" class="humdity-level"></div>
-          <div id="wind-speed2" class="wind"></div>
+          <div id="day2Humidity" class="humdity-level"></div>
+          <div id="day2Wind" class="wind"></div>
       </div>
   </div>
   </section>
@@ -66,10 +72,11 @@
   <section id="five-day-container " class="forecast4">
     <div id="iconContainer">
       <div class="icons">
+          <div id="day3Icon"></div>
           <div id="day3Min" class="MinTemp"></div>
           <div id="day3Max" class="MaxTemp"></div>
-          <div id="humidity3" class="humdity-level"></div>
-          <div id="wind-speed3" class="wind"></div>
+          <div id="day3Humidity" class="humdity-level"></div>
+          <div id="day3Wind" class="wind"></div>
       </div>
   </div>
   </section>
@@ -77,10 +84,11 @@
   <section id="five-day-container " class="forecast5">
     <div id="iconContainer">
       <div class="icons">
+          <div id="day4Icon"></div>
           <div id="day4Min" class="MinTemp"></div>
           <div id="day4Max" class="MaxTemp"></div>
-          <div id="humidity4" class="humdity-level"></div>
-          <div id="wind-speed4" class="wind"></div>
+          <div id="day4Humidity" class="humdity-level"></div>
+          <div id="day4Wind" class="wind"></div>
       </div>
   </div>
   </section>
