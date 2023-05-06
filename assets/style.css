@@ -54,8 +54,14 @@ body{
     color: rgba(255, 255, 255, 0.858);
 
 }
+
+.history-search {
+    font-size: 1.5rem;
+    color: darkslateblue;
+}
+
 .city {
-   width: 75%;
+   width: 100%;
     position: relative;
     float:right;
     border: 3px solid rgb(85, 82, 82);

@@ -11,19 +11,50 @@ let forecast = document.getElementById('five-day');
 var currentDate = moment().format('dddd, MMMM Do, YYYY')
 
 let historyLocation =document.getElementById('history');
+let cities =[];
 
+function citySearch(e) {
+  e.preventDefault();
+  let cityValue = cityInput.value;
 
-function citySearch(e){
-  e.preventDefault()
-  let cityValue = cityInput.value
-  fetchCityData(cityValue)
-  // fetchCityForecast(cityValue)
-  // makeCityHistory(cityValue)
+  // Add city to cities array only if it doesn't already exist
+  if (!cities.includes(cityValue)) {
+    cities.push(cityValue);
+    localStorage.setItem('cities', JSON.stringify(cities));
+  }
+
+  fetchCityData(cityValue);
 }
+
+function renderCityList() {
+  // Retrieve saved cities from local storage
+  let savedCities = JSON.parse(localStorage.getItem('cities')) || [];
+
+  // Loop through saved cities and create clickable city names
+  for (let i = 0; i < savedCities.length; i++) {
+    let city = savedCities[i];
+    let cityLink = document.createElement('a');
+    cityLink.setAttribute('href', '#');
+    cityLink.textContent = city;
+    cityLink.addEventListener('click', function(e) {
+      e.preventDefault();
+      fetchCityData(city);
+    });
+    let listItem = document.createElement('li');
+    listItem.appendChild(cityLink);
+    historyLocation.appendChild(listItem);
+  }
+}
+
+
+
 
 function fetchCityData(cityName){
   let apiKey = '51e134b64a886c4af2649caf80c493b5'
   let requestUrl = 'https://api.openweathermap.org/data/2.5/weather?q=' + cityName + '&units=imperial&appid=' + apiKey
+
+
+
 
   //start fetch request
   fetch(requestUrl) 
@@ -41,7 +72,7 @@ function fetchCityData(cityName){
    
    let lat = cityData.coord.lat
    let lon = cityData.coord.lon
-  //  function fetchCityForecast(cityName){ var requestUv = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&exclude={part}&appid=f30dc0b71f772a037a522282770190be";
+ 
 
     //  let forecastURL = 'https://api.openweathermap.org/data/2.5/forecast?lat=' + lat + '&lon=' + lon + '&appid=51e134b64a886c4af2649caf80c493b5&units=imperial'
     var forecastURL = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&exclude={part}&appid=f30dc0b71f772a037a522282770190be&units=imperial";
@@ -54,66 +85,64 @@ function fetchCityData(cityName){
       console.log(forecastURL)
        console.log('weatherForecast', forecastData)
      
-   
-   
-    for(i=0; i<5; i++){ 
+    
+
+     
+
+
              //Min Temperature
-            //  let day0 =document.createElement('h1')
-            //  day0.textContent = forecastData.list[1].main.temp_min
-      //  document.getElementById('day' +(i) +'Min').textContent = 'Min:' +Number(forecastData.list[i].main.temp_min);
-       let temp_min = Number(forecastData.daily[i].temp.min)
-       document.getElementById('day0Min').textContent = 'Min:' +Number(forecastData.daily[0].temp.min);
-           day0Min.append(temp_min) 
-      document.getElementById('day1Min').textContent = 'Min:' +Number(forecastData.daily[1].temp.min);     
-             day1Min.append(temp_min)
-      document.getElementById('day2Min').textContent = 'Min:' +Number(forecastData.daily[2].temp.min); 
-             day2Min.append(temp_min)
-      document.getElementById('day3Min').textContent = 'Min:' +Number(forecastData.daily[3].temp.min); 
-             day3Min.append(temp_min)
-      document.getElementById('day4Min').textContent = 'Min:' +Number(forecastData.daily[4].temp.min); 
-             day4Min.append(temp_min)
+            
+      document.getElementById('day0Min').textContent = 'Min: ' + parseInt(forecastData.daily[0].temp.min.toFixed(0));
+      document.getElementById('day1Min').textContent = 'Min: ' + parseInt(forecastData.daily[1].temp.min.toFixed(0));     
+      document.getElementById('day2Min').textContent = 'Min: ' + parseInt(forecastData.daily[2].temp.min.toFixed(0)); 
+      document.getElementById('day3Min').textContent = 'Min: ' + parseInt(forecastData.daily[3].temp.min.toFixed(0)); 
+      document.getElementById('day4Min').textContent = 'Min: ' + parseInt(forecastData.daily[4].temp.min.toFixed(0)); 
+      
+      
 
              //Max Temp
-             let temp_max = Number(forecastData.daily[i].temp.max)
-      document.getElementById('day0Max').textContent = 'Max:' +Number(forecastData.daily[0].temp.max); 
-           day0Max.append(temp_max)
-     document.getElementById('day1Max').textContent = 'Max:' +Number(forecastData.daily[1].temp.max);      
-             day1Max.append(temp_max)
-      document.getElementById('day2Max').textContent = 'Max:' +Number(forecastData.daily[2].temp.max);
-             day2Max.append(temp_max)
-      document.getElementById('day3Max').textContent = 'Max:' +Number(forecastData.daily[3].temp.max);
-             day3Max.append(temp_max)
-      document.getElementById('day4Max').textContent = 'Max:' +Number(forecastData.daily[4].temp.max);
-             day4Max.append(temp_max)
+             document.getElementById('day0Max').textContent = 'Max: ' + parseInt(forecastData.daily[0].temp.max.toFixed(0));
+             document.getElementById('day1Max').textContent = 'Max: ' + parseInt(forecastData.daily[1].temp.max.toFixed(0));
+             document.getElementById('day2Max').textContent = 'Max: ' + parseInt(forecastData.daily[2].temp.max.toFixed(0));
+             document.getElementById('day3Max').textContent = 'Max: ' + parseInt(forecastData.daily[3].temp.max.toFixed(0));
+             document.getElementById('day4Max').textContent = 'Max: ' + parseInt(forecastData.daily[4].temp.max.toFixed(0));
              
              //Daily Icon
-       document.getElementById('iconContainer').src='https://openweathermap.org/img/wn/'+ forecastData.list[i].weather[0].icon+'.png';
-           iconContainer[i].append(icon.png)
-             
+  // Loop through each day's weather forecast and display the icon
+  for (let i = 0; i < 5; i++) {
+    let iconCode = forecastData.daily[i].weather[0].icon;
+    let iconURL = "https://openweathermap.org/img/w/" + iconCode + ".png";
+    let iconImg = document.createElement('img');
+    iconImg.setAttribute('src', iconURL);
+    iconImg.setAttribute('alt', forecastData.daily[i].weather[0].description);
+    // Append the icon to the HTML element
+    document.getElementById('day' + i + 'Icon').appendChild(iconImg);
+  }
+  
              // Humidity
-       document.getElementById('humidity + (i)').innerHTML = 'Humidity:' + Number(forecastData.list[i].main.humidity);
-            humidity0.append(humidity)
-            humidity8.append(humidity)
-            humidity16.append(humidity)
-            humidity24.append(humidity)
-            humidity32.append(humidity)
+ 
+  // Loop through each day's weather forecast and display the humidity
+  for (let i = 0; i < 5; i++) {
+    let humidity = forecastData.daily[i].humidity;
+    document.getElementById('day' + i + 'Humidity').textContent = 'Humidity: ' + humidity + '%';
+  }
+
+
              //Wind speed
-       document.getElementById('wind-speed + (i)').innerHTML = 'Wind Speed' +Number(forecastData.list[i].wind.speed);
-           wind-speed0.append(wind.speed)
-           wind-speed8.append(wind.speed)
-           wind-speed16.append(wind.speed)
-           wind-speed24.append(wind.speed)
-           wind-speed32.append(wind.speed)
-     }
+       for (let i=0; i < 5; i++) {
+        let wind = forecastData.daily[i].wind_speed;
+        document.getElementById('day' + i + 'Wind').textContent = 'Wind: ' + wind + 'mph';
+       }
+   
      
-     })
+     }
+     )
    }
-  //  }
+  
   )
    
-// API for Forecast
-
-
 
 }
 btn.addEventListener('click', citySearch)
+
+renderCityList();
