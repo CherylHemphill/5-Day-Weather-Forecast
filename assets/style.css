@@ -23,6 +23,7 @@ body{
     justify-content: center;
     margin-bottom: 20px;
     color: whitesmoke;
+    padding: 10px;
 }
 
 .search-field {  /* City Location Search */
@@ -58,6 +59,9 @@ body{
 .history-search {
     font-size: 1.5rem;
     color: darkslateblue;
+    margin-bottom: 60px;
+    
+
 }
 
 .city {
@@ -65,7 +69,7 @@ body{
     position: relative;
     float:right;
     border: 3px solid rgb(85, 82, 82);
-    margin-bottom: 30px;
+    margin-bottom: 50px;
     border-radius: 10px;
 
 }
@@ -74,7 +78,7 @@ body{
 .current-weather {
     font-size: 2rem;
     margin: 8px;
-    margin: 25px;
+    margin-top: 25px;
 }
 
 .forecast1, .forecast2, .forecast3, .forecast4, .forecast5 {

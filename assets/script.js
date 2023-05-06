@@ -24,11 +24,17 @@ function citySearch(e) {
   }
 
   fetchCityData(cityValue);
+  renderCityList();
 }
 
 function renderCityList() {
   // Retrieve saved cities from local storage
   let savedCities = JSON.parse(localStorage.getItem('cities')) || [];
+
+  // Remove previously rendered list items
+  while (historyLocation.firstChild) {
+    historyLocation.removeChild(historyLocation.firstChild);
+  }
 
   // Loop through saved cities and create clickable city names
   for (let i = 0; i < savedCities.length; i++) {
@@ -45,6 +51,10 @@ function renderCityList() {
     historyLocation.appendChild(listItem);
   }
 }
+
+// Call the renderCityList function once when the page is loaded
+document.addEventListener('DOMContentLoaded', renderCityList);
+
 
 
 
@@ -65,10 +75,14 @@ function fetchCityData(cityName){
     console.log('cityWeatherData', cityData)
     let nameOfCity = document.createElement('h2')
     nameOfCity.textContent = cityData.name + ' ' + currentDate
+     currentContainer.innerHTML = '';
     currentContainer.append(nameOfCity)
      
-  let tempOfCity = document.createElement('h3')
-   tempOfCity.textContent = currentContainer.append(cityData.main.temp)
+    let tempOfCity = document.createElement('h3');
+    let roundedTemp = Math.round(cityData.main.temp);
+    tempOfCity.textContent = `${roundedTemp}°F`;
+    currentContainer.append(tempOfCity);
+    
    
    let lat = cityData.coord.lat
    let lon = cityData.coord.lon
@@ -86,53 +100,39 @@ function fetchCityData(cityName){
        console.log('weatherForecast', forecastData)
      
     
-
-     
-
-
-             //Min Temperature
-            
-      document.getElementById('day0Min').textContent = 'Min: ' + parseInt(forecastData.daily[0].temp.min.toFixed(0));
-      document.getElementById('day1Min').textContent = 'Min: ' + parseInt(forecastData.daily[1].temp.min.toFixed(0));     
-      document.getElementById('day2Min').textContent = 'Min: ' + parseInt(forecastData.daily[2].temp.min.toFixed(0)); 
-      document.getElementById('day3Min').textContent = 'Min: ' + parseInt(forecastData.daily[3].temp.min.toFixed(0)); 
-      document.getElementById('day4Min').textContent = 'Min: ' + parseInt(forecastData.daily[4].temp.min.toFixed(0)); 
-      
-      
-
-             //Max Temp
-             document.getElementById('day0Max').textContent = 'Max: ' + parseInt(forecastData.daily[0].temp.max.toFixed(0));
-             document.getElementById('day1Max').textContent = 'Max: ' + parseInt(forecastData.daily[1].temp.max.toFixed(0));
-             document.getElementById('day2Max').textContent = 'Max: ' + parseInt(forecastData.daily[2].temp.max.toFixed(0));
-             document.getElementById('day3Max').textContent = 'Max: ' + parseInt(forecastData.daily[3].temp.max.toFixed(0));
-             document.getElementById('day4Max').textContent = 'Max: ' + parseInt(forecastData.daily[4].temp.max.toFixed(0));
-             
-             //Daily Icon
-  // Loop through each day's weather forecast and display the icon
-  for (let i = 0; i < 5; i++) {
-    let iconCode = forecastData.daily[i].weather[0].icon;
-    let iconURL = "https://openweathermap.org/img/w/" + iconCode + ".png";
-    let iconImg = document.createElement('img');
-    iconImg.setAttribute('src', iconURL);
-    iconImg.setAttribute('alt', forecastData.daily[i].weather[0].description);
-    // Append the icon to the HTML element
-    document.getElementById('day' + i + 'Icon').appendChild(iconImg);
-  }
+// Loop through each day's weather forecast and update the temperature, icon, and humidity
+for (let i = 0; i < 5; i++) {
+  let forecastDate = moment.unix(forecastData.daily[i].dt).format('dddd, MMMM Do');
   
-             // Humidity
- 
-  // Loop through each day's weather forecast and display the humidity
-  for (let i = 0; i < 5; i++) {
-    let humidity = forecastData.daily[i].humidity;
-    document.getElementById('day' + i + 'Humidity').textContent = 'Humidity: ' + humidity + '%';
-  }
+  // Update the forecast date
+  document.getElementById('day' + i + 'Date').textContent = forecastDate;
 
+  // Update the minimum temperature
+  document.getElementById('day' + i + 'Min').textContent = 'Min: ' + parseInt(forecastData.daily[i].temp.min.toFixed(0));
+  
+  // Update the maximum temperature
+  document.getElementById('day' + i + 'Max').textContent = 'Max: ' + parseInt(forecastData.daily[i].temp.max.toFixed(0));
+  
+  // Update the weather icon
+  let iconCode = forecastData.daily[i].weather[0].icon;
+  let iconURL = "https://openweathermap.org/img/w/" + iconCode + ".png";
+  let iconImg = document.createElement('img');
+  iconImg.setAttribute('src', iconURL);
+  iconImg.setAttribute('alt', forecastData.daily[i].weather[0].description);
+  document.getElementById('day' + i + 'Icon').innerHTML = '';
+  document.getElementById('day' + i + 'Icon').appendChild(iconImg);
+  
+  // Update the humidity
+  let humidity = forecastData.daily[i].humidity;
+  document.getElementById('day' + i + 'Humidity').textContent = 'Humidity: ' + humidity + '%';
 
-             //Wind speed
-       for (let i=0; i < 5; i++) {
+      //Wind speed
+     
         let wind = forecastData.daily[i].wind_speed;
         document.getElementById('day' + i + 'Wind').textContent = 'Wind: ' + wind + 'mph';
-       }
+      
+}
+
    
      
      }
@@ -145,4 +145,4 @@ function fetchCityData(cityName){
 }
 btn.addEventListener('click', citySearch)
 
-renderCityList();
+
