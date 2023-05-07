@@ -12,6 +12,7 @@ Your searches will also save for next time you open the webpage.
 
 To access this 5 Day Weather Forecast follow the link below:
 
+https://cherylhemphill.github.io/5-Day-Weather-Forecast/
 
 
 ![Alt text](./assets/Weather%20Forecast.gif)
